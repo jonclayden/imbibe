@@ -1,0 +1,14 @@
+Package: niimath
+Version: 0.1.0
+Date: 2019-05-01
+Title: General Image Processing
+Authors@R: c(person("Jon", "Clayden", email="code@clayden.org", role=c("aut","cre")),
+             person("Chris", "Rorden", role="aut"))
+Maintainer: Jon Clayden <code@clayden.org>
+Imports: Rcpp, RNifti
+LinkingTo: Rcpp, RNifti
+Description: An R wrapper around Chris Rorden's reimplementation of 'fslmaths'.
+License: BSD_3_clause + file LICENCE
+URL: https://github.com/jonclayden/niimath
+BugReports: https://github.com/jonclayden/niimath/issues
+Encoding: UTF-8
