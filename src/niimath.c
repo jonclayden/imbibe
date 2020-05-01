@@ -10,11 +10,16 @@
  *
  *----------------------------------------------------------------------
  */
- 
+
+#ifdef USING_R
+#define RNIFTI_NIFTILIB_VERSION 2
+#include "RNifti.h"
+#else
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <nifti2_io.h>
+#endif
 #include "core32.h" //all 32-bit functions
 #include "core64.h" //all 64-bit functions
 

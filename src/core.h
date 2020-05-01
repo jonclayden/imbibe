@@ -5,12 +5,21 @@
 extern "C" {
 #endif
 
+#ifdef USING_R
+
+#define RNIFTI_NIFTILIB_VERSION 2
+#include <RNifti.h>
+
+#else
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <nifti2_io.h>
 #include <float.h> //FLT_EPSILON
 //#include <immintrin.h>
 #include <limits.h>
+
+#endif
 
 //CORE32 and CORE64 handle Float32 and Float64 operations, CORE handles shared code 
 

@@ -11,9 +11,11 @@
  #define epsilon DBL_EPSILON
 #endif
 
+#ifndef USING_R
 #include <stdio.h>
 #include <stdlib.h>
 #include <nifti2_io.h>
+#endif
 #include <float.h> //FLT_EPSILON
 #ifdef __aarch64__
   #include "arm_malloc.h"

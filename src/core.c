@@ -1,11 +1,13 @@
 #include "core.h"
 #define _USE_MATH_DEFINES //microsoft compiler
+#ifndef USING_R
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <nifti2_io.h>
 #include <float.h> //FLT_EPSILON
 #include <limits.h>
+#endif
 #ifdef __aarch64__
   #include "arm_malloc.h"
 #else
