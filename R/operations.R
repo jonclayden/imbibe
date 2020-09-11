@@ -6,8 +6,9 @@ niimath <- function (image) {
 }
 
 .command <- function (init, flag, ...) {
-    elements <- niimath(init)
-    images <- attr(elements, "images")
+    init <- niimath(init)
+    elements <- as.character(c(init, flag))
+    images <- attr(init, "images")
     args <- list(...)
     for (i in seq_along(args)) {
         if (is.numeric(args[[i]]))
