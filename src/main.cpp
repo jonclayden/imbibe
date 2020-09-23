@@ -49,7 +49,7 @@ BEGIN_RCPP
         }
     }
     
-    // At the precision argument and run the pipeline
+    // Add the precision argument and run the pipeline
     std::string precision = Rcpp::as<std::string>(_precision);
     if (precision == "single" || precision == "float")
     {
