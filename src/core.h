@@ -7,8 +7,7 @@ extern "C" {
 
 #ifdef USING_R
 
-#define RNIFTI_NIFTILIB_VERSION 2
-#include <RNifti.h>
+#include "RNifti_shim.h"
 
 #else
 

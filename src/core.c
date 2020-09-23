@@ -81,6 +81,9 @@ int nifti_save(nifti_image * nim, const char *postfix) {
    	//append extensions...
 	nim->fname = hname;
 	nim->iname = iname;
+#ifdef USING_R
+    setOutputImage(nim);
+#else
 	nifti_image_write( nim );
 	free(hname);
 	if ( nim->iname != NULL )
@@ -89,6 +92,7 @@ int nifti_save(nifti_image * nim, const char *postfix) {
 	nim->fname = fname_in;
 	nim->iname = iname_in;
 	nim->nifti_type = nifti_type_in;
+#endif
 	return 0;
 }
 
@@ -122,7 +126,11 @@ nifti_image *nifti_image_read2( const char *hname , int read_data ) {
 	//in fslmaths 6.0.1 the commands are different, the first preserves cal_min, cal_max
 	// fslmaths in out 
 	// fslmaths in -add 0 out -odt input
+#ifdef USING_R
+    nifti_image *nim = getInputImage(hname, read_data);
+#else
 	nifti_image *nim = nifti_image_read(hname, read_data);
+#endif
 	if (nim == NULL) exit(11);
 	nim->cal_min = 0.0;
 	nim->cal_max = 0.0;
@@ -499,7 +507,11 @@ int nifti_image_change_datatype ( nifti_image * nim, int dt , in_hdr * ihdr) {
 } //nifti_image_change_datatype()
 
 int * make_kernel_file(nifti_image * nim, int * nkernel,  char * fin) {
+#ifdef USING_R
+    nifti_image * nim2 = getInputImage(fin, 1);
+#else
 	nifti_image * nim2 = nifti_image_read(fin, 1);
+#endif
 	if( !nim2 ) {
 	  fprintf(stderr,"make_kernel_file: failed to read NIfTI image '%s'\n", fin);
 	  return NULL;
