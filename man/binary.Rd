@@ -9,7 +9,7 @@
 \alias{mask}
 \alias{maximum}
 \alias{minimum}
-\title{Binary operations}
+\title{Basic binary operations}
 \usage{
 add(image, arg)
 
@@ -33,5 +33,5 @@ minimum(image, arg)
 \item{arg}{Numeric or image argument}
 }
 \description{
-Binary operations
+Basic binary operations
 }
