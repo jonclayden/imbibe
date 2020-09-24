@@ -6,7 +6,7 @@
 \alias{erode}
 \alias{filter_median}
 \alias{filter_mean}
-\alias{smooth}
+\alias{smooth_gauss}
 \title{Mathematical morphology and filtering operations}
 \usage{
 dilate(image, kernel = NULL, ..., max = FALSE, nonzero = TRUE)
@@ -19,7 +19,7 @@ filter_median(image, kernel = NULL, ...)
 
 filter_mean(image, kernel = NULL, ..., norm = TRUE)
 
-smooth(image, sigma)
+smooth_gauss(image, sigma)
 }
 \description{
 Mathematical morphology and filtering operations

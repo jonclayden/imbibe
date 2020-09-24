@@ -127,7 +127,7 @@ kernel_file <- function (image, file)       .command(image, c("-kernel","file",f
 #' Mathematical morphology and filtering operations
 #' 
 #' @rdname morphology
-#' @export dilate dilateall erode filter_median filter_mean smooth
+#' @export dilate dilateall erode filter_median filter_mean smooth_gauss
 dilate <- function (image, kernel = NULL, ..., max = FALSE, nonzero = TRUE) {
     flag <- ""
     if (!max && nonzero)
@@ -180,5 +180,5 @@ filter_mean <- function (image, kernel = NULL, ..., norm = TRUE) {
 }
 
 #' @rdname morphology
-smooth <- function (image, sigma)               .command(image, "-s", as.numeric(sigma))
+smooth_gauss <- function (image, sigma)         .command(image, "-s", as.numeric(sigma))
 subsample <- function (image, offset = FALSE)   .command(image, ifelse(offset,"-subsamp2offc","-subsamp2"))
