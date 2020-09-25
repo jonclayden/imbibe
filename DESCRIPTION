@@ -8,7 +8,7 @@ Maintainer: Jon Clayden <code@clayden.org>
 Imports: Rcpp, RNifti, magrittr
 LinkingTo: Rcpp, RNifti
 Description: An R wrapper around Chris Rorden's reimplementation of 'fslmaths'.
-License: BSD_3_clause + file LICENCE
+License: BSD_2_clause + file LICENCE
 URL: https://github.com/jonclayden/niimath
 BugReports: https://github.com/jonclayden/niimath/issues
 Encoding: UTF-8
