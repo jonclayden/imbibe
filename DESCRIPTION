@@ -1,7 +1,7 @@
-Package: niimath
+Package: imbibe
 Version: 0.1.0
-Date: 2019-05-01
-Title: General Image Processing
+Date: 2020-09-25
+Title: A Pipe-Friendly Image Calculator
 Authors@R: c(person("Jon", "Clayden", email="code@clayden.org", role=c("aut","cre")),
              person("Chris", "Rorden", role="aut"))
 Maintainer: Jon Clayden <code@clayden.org>

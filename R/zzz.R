@@ -2,5 +2,5 @@
 #' @importFrom Rcpp evalCpp
 #' @importFrom magrittr "%>%"
 #' @export "%>%"
-#' @useDynLib niimath, .registration = TRUE, .fixes = "C_"
+#' @useDynLib imbibe, .registration = TRUE, .fixes = "C_"
 NULL

@@ -79,7 +79,7 @@ static R_CallMethodDef callMethods[] = {
 };
 
 // Package initialisation
-void R_init_niimath (DllInfo *info)
+void R_init_imbibe (DllInfo *info)
 {
    R_registerRoutines(info, NULL, callMethods, NULL, NULL);
    R_useDynamicSymbols(info, FALSE);
