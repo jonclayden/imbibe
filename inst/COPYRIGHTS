@@ -1,3 +1,11 @@
+The imbibe package itself, including all R code and the interface to niimath, is copyright (C) 2020 University College London.
+
+The Butterworth filter code in bw.{c,h} is Copyright (C) 2007 Exstrom Laboratories LLC.
+
+The licence and copyright terms for the other components of the package are outlined below.
+
+----------
+
 As Kernighan and Plauger (ISBN-10: 0070342075, p115) noted "Floating point numbers are like piles of sand; every time you move one you lose a little sand and pick up a little dirt. " This software is designed to generate results that are negligibly different from fslmaths. Due to differences in rounding orders, orders of instructions, etc. the results may sometimes differ by a tiny amount. These tools use 32-bit and 64-bit floating point values, with accuracy that is typically far beyond that of our imaging data (where we use 12 or 16-bit analogue to digital conversion and where our signal-to-noise is low). Therefore, the computational accuracy will typically be more than sufficient for our purposes.
   http://www.freshsources.com/page1/page7/files/Sand-1.pdf
 
