@@ -1,6 +1,8 @@
 #include "core.h"
 #define _USE_MATH_DEFINES //microsoft compiler
-#ifndef USING_R
+#ifdef USING_R
+#include "print.h"
+#else
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -117,7 +119,7 @@ int neg_determ(nifti_image * nim) {
 	mat44 AA = xform(nim);
 	mat33 m;
 	LOAD_MAT33(m, AA.m[0][0], AA.m[0][1], AA.m[0][2], AA.m[1][0], AA.m[1][1], AA.m[1][2], AA.m[2][0], AA.m[2][1], AA.m[2][2]);
-	//printf("determ = %g\n", nifti_mat33_determ(m));
+	//niimath_print("determ = %g\n", nifti_mat33_determ(m));
 	if (nifti_mat33_determ(m) < 0) return 1;
 	return 0;	
 } //report if negative determinant, e.g. we don't want negative volume, eg. "brain volume of -1400cc"
@@ -128,10 +130,12 @@ nifti_image *nifti_image_read2( const char *hname , int read_data ) {
 	// fslmaths in -add 0 out -odt input
 #ifdef USING_R
     nifti_image *nim = getInputImage(hname, read_data);
+    if (nim == NULL)
+        Rf_error("Failed to retrieve image");
 #else
 	nifti_image *nim = nifti_image_read(hname, read_data);
+    if (nim == NULL) exit(11);
 #endif
-	if (nim == NULL) exit(11);
 	nim->cal_min = 0.0;
 	nim->cal_max = 0.0;
 	//nim->descrip = '';
@@ -502,7 +506,7 @@ int nifti_image_change_datatype ( nifti_image * nim, int dt , in_hdr * ihdr) {
 		}
 		free(dat);
 	} //if (dt == DT_UINT16)
-	fprintf(stderr,"nifti_image_change_datatype: Unsupported datatype %d -> %d\n", idt, dt);
+	niimath_message("nifti_image_change_datatype: Unsupported datatype %d -> %d\n", idt, dt);
 	return ok;	
 } //nifti_image_change_datatype()
 
@@ -513,7 +517,7 @@ int * make_kernel_file(nifti_image * nim, int * nkernel,  char * fin) {
 	nifti_image * nim2 = nifti_image_read(fin, 1);
 #endif
 	if( !nim2 ) {
-	  fprintf(stderr,"make_kernel_file: failed to read NIfTI image '%s'\n", fin);
+	  niimath_message("make_kernel_file: failed to read NIfTI image '%s'\n", fin);
 	  return NULL;
 	}
 	int x = nim2->nx;
@@ -608,7 +612,7 @@ int * make_kernel(nifti_image * nim, int * nkernel, int x, int y, int z) {
 	y = MAX(1,y);
 	z = MAX(1,z);
 	if ( ((x % 2) == 0) || ((y % 2) == 0) || ((z % 2) == 0) )
-		fprintf(stderr,"Off-center kernel due to even dimensions.\n");
+		niimath_message("Off-center kernel due to even dimensions.\n");
 	int n = x * y * z; 
 	*nkernel = n;
 	int * kernel  = (int *)_mm_malloc((n*4)*sizeof(int), 64); //4 values: offset, xpos, ypos, weight
@@ -620,7 +624,7 @@ int * make_kernel(nifti_image * nim, int * nkernel, int x, int y, int z) {
 	for (int zi = zlo; zi < (zlo+z); zi++ )
 		for (int yi = ylo; yi < (ylo+y); yi++ )
 			for (int xi = xlo; xi < (xlo+x); xi++ ) {
-				//printf("%d %d %d\n", xi,yi,zi);
+				//niimath_print("%d %d %d\n", xi,yi,zi);
 				kernel[i] = xi + (yi * nim->nx) + (zi * nim->nx * nim->ny);
 				kernel[i+n] = xi; //left-right wrap detection
 				kernel[i+n+n] = yi; //anterior-posterior wrap detection

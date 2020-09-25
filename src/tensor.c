@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef USING_R
+#include "print.h"
+#endif
+
 #ifndef MAX
 #define MAX(A,B) ((A) > (B) ? (A) : (B))
 #endif
@@ -1202,7 +1206,7 @@ void symeig_3( double *a , double *e , int dovec )
      static int nerr=0 ;
      {
      if( ++nerr < 4 )
-       fprintf(stderr,"** ERROR in symeig_3: discrim=%g numer=%g\n",qq,rr) ;
+       niimath_message("** ERROR in symeig_3: discrim=%g numer=%g\n",qq,rr) ;
      }
      qs = qq = rr = 0.0 ;
    } else {

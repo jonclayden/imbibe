@@ -6,6 +6,7 @@ RcppExport SEXP run (SEXP _args, SEXP _precision)
 {
 BEGIN_RCPP
     int status = 0;
+    Rcpp::RNGScope scope;
     
     // Construct argument list: "-dt {float|double}" is required in practice
     Rcpp::CharacterVector argsR(_args);
