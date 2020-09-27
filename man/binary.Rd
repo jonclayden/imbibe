@@ -28,9 +28,12 @@ maximum(image, arg)
 minimum(image, arg)
 }
 \arguments{
-\item{image}{Image object or pipeline}
+\item{image}{An image object or pipeline.}
 
-\item{arg}{Numeric or image argument}
+\item{arg}{Numeric or image argument.}
+}
+\value{
+An updated pipeline.
 }
 \description{
 Basic binary operations

@@ -21,6 +21,29 @@ kernel_sphere(image, radius)
 
 kernel_file(image, file)
 }
+\arguments{
+\item{image}{An image object or pipeline.}
+
+\item{width}{The width of the kernel in appropriate units. If \code{voxels}
+is \code{FALSE} a value can be specified for each of the three dimensions;
+otherwise only a single value should be given and the kernel will be
+isotropic.}
+
+\item{voxels}{Logical value: if \code{TRUE}, the \code{width} is given in
+pixels/voxels and must be an odd integer; otherwise, the units are
+millimetres and can take any value.}
+
+\item{sigma}{Numeric value giving the standard deviation of a Gaussian
+kernel, in millimetres.}
+
+\item{file}{Name of a NIfTI file containing the kernel.}
+
+\item{sphere}{Numeric value giving the radius of a sphere kernel, in
+millimetres.}
+}
+\value{
+An updated pipeline.
+}
 \description{
 Mathematical morphology kernels
 }

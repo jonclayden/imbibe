@@ -69,7 +69,6 @@ minimum <- function (image, arg)    .command(image, "-min", arg)
 #'   argument implicitly.
 #' @return An updated pipeline.
 #' 
-#' @param 
 #' @export threshold threshold_below threshold_above
 threshold <- function (image, value, reference = c("none","image","nonzero"), above = FALSE) {
     if (above)

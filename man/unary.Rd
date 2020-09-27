@@ -42,6 +42,17 @@ absolute(image)
 
 binarise(image, invert = FALSE)
 }
+\arguments{
+\item{image}{An image object or pipeline.}
+
+\item{invert}{Logical value: if \code{TRUE}, binarising will also perform
+logical inversion so that only zeroes in the original image will be
+nonzero; if \code{FALSE}, the default, the usual sense is used, in which
+zeroes remain as they are, and everything else is converted to 1.}
+}
+\value{
+An updated pipeline.
+}
 \description{
 Basic unary operations
 }
