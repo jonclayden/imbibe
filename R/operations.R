@@ -27,10 +27,12 @@ run <- function (pipe, precision = c("double","float","single")) {
     .Call(C_run, pipe, precision)
 }
 
+
 #' Basic binary operations
 #' 
-#' @param image Image object or pipeline
-#' @param arg Numeric or image argument
+#' @param image An image object or pipeline.
+#' @param arg Numeric or image argument.
+#' @return An updated pipeline.
 #' 
 #' @rdname binary
 #' @export add subtract multiply divide remainder mask maximum minimum
@@ -50,25 +52,51 @@ maximum <- function (image, arg)    .command(image, "-max", arg)
 #' @rdname binary
 minimum <- function (image, arg)    .command(image, "-min", arg)
 
-#' @export
-threshold <- function (image, arg, frac = FALSE, nonzero = FALSE, above = FALSE) {
-    if (!frac && !nonzero && !above)
-        .command(image, "-thr", arg)
-    else if (frac && !nonzero && !above)
-        .command(image, "-thrp", arg)
-    else if (frac && nonzero && !above)
-        .command(image, "-thrP", arg)
-    else if (!frac && !nonzero && above)
-        .command(image, "-uthr", arg)
-    else if (frac && !nonzero && above)
-        .command(image, "-uthrp", arg)
-    else if (frac && nonzero && above)
-        .command(image, "-uthrP", arg)
+
+#' Image thresholding
+#' 
+#' @param image An image object or pipeline.
+#' @param value Numeric threshold value.
+#' @param reference String indicating what the \code{value} should be
+#'   referenced against, if anything. If \code{"none"}, the default, the
+#'   \code{value} is taken literally. If \code{"image"}, it is interpreted as
+#'   a proportion of the "robust range" of the current image's intensities. If
+#'   \code{"nonzero"} it is interpreted as a proportion of the "robust range"
+#'   of the nonzero pixel intensities.
+#' @param above Logical value: if \code{TRUE} the operation zeroes values above
+#'   the threshold; otherwise it zeroes values below it. The
+#'   \code{threshold_below} and \code{threshold_above} function variants set
+#'   argument implicitly.
+#' @return An updated pipeline.
+#' 
+#' @param 
+#' @export threshold threshold_below threshold_above
+threshold <- function (image, value, reference = c("none","image","nonzero"), above = FALSE) {
+    if (above)
+        .command(image, switch(reference,none="-uthr",image="-uthrp",nonzero="-uthrP"))
     else
-        stop("The specified set of options to threshold() is invalid")
+        .command(image, switch(reference,none="-thr",image="-thrp",nonzero="-thrP"))
 }
 
+#' @rdname threshold
+threshold_below <- function (image, value, reference = c("none","image","nonzero")) {
+    threshold(image, value, reference, above=FALSE)
+}
+
+#' @rdname threshold
+threshold_above <- function (image, value, reference = c("none","image","nonzero")) {
+    threshold(image, value, reference, above=TRUE)
+}
+
+
 #' Basic unary operations
+#' 
+#' @param image An image object or pipeline.
+#' @param invert Logical value: if \code{TRUE}, binarising will also perform
+#'   logical inversion so that only zeroes in the original image will be
+#'   nonzero; if \code{FALSE}, the default, the usual sense is used, in which
+#'   zeroes remain as they are, and everything else is converted to 1.
+#' @return An updated pipeline.
 #' 
 #' @rdname unary
 #' @export exponent logarithm sine cosine tangent arcsine arccosine arctangent square squareroot reciprocal absolute binarise binarize
@@ -98,7 +126,23 @@ absolute <- function (image)    .command(image, "-abs")
 #' @rdname unary
 binarise <- binarize <- function (image, invert = FALSE) .command(image, ifelse(invert,"-binv","-bin"))
 
+
 #' Mathematical morphology kernels
+#' 
+#' @param image An image object or pipeline.
+#' @param width The width of the kernel in appropriate units. If \code{voxels}
+#'   is \code{FALSE} a value can be specified for each of the three dimensions;
+#'   otherwise only a single value should be given and the kernel will be
+#'   isotropic.
+#' @param voxels Logical value: if \code{TRUE}, the \code{width} is given in
+#'   pixels/voxels and must be an odd integer; otherwise, the units are
+#'   millimetres and can take any value.
+#' @param sigma Numeric value giving the standard deviation of a Gaussian
+#'   kernel, in millimetres.
+#' @param sphere Numeric value giving the radius of a sphere kernel, in
+#'   millimetres.
+#' @param file Name of a NIfTI file containing the kernel.
+#' @return An updated pipeline.
 #' 
 #' @rdname kernels
 #' @export kernel_3d kernel_2d kernel_box kernel_gauss kernel_sphere kernel_file
@@ -123,6 +167,7 @@ kernel_gauss <- function (image, sigma)     .command(image, c("-kernel","gauss")
 kernel_sphere <- function (image, radius)   .command(image, c("-kernel","sphere"), as.numeric(radius))
 #' @rdname kernels
 kernel_file <- function (image, file)       .command(image, c("-kernel","file",file))
+
 
 #' Mathematical morphology and filtering operations
 #' 
@@ -182,3 +227,23 @@ filter_mean <- function (image, kernel = NULL, ..., norm = TRUE) {
 #' @rdname morphology
 smooth_gauss <- function (image, sigma)         .command(image, "-s", as.numeric(sigma))
 subsample <- function (image, offset = FALSE)   .command(image, ifelse(offset,"-subsamp2offc","-subsamp2"))
+
+
+#' Dimensionality reduction in the temporal domain
+#' @rdname drt
+#' @export drt_mean drt_sd drt_max drt_whichmax drt_min drt_median drt_quantile drt_AR1
+drt_mean <- function (image)            .command(image, "-Tmean")
+#' @rdname drt
+drt_sd <- function (image)              .command(image, "-Tstd")
+#' @rdname drt
+drt_max <- function (image)             .command(image, "-Tmax")
+#' @rdname drt
+drt_whichmax <- function (image)        .command(image, "-Tmaxn")
+#' @rdname drt
+drt_min <- function (image)             .command(image, "-Tmin")
+#' @rdname drt
+drt_median <- function (image)          .command(image, "-Tmedian")
+#' @rdname drt
+drt_quantile <- function (image, prob)  .command(image, "-Tperc", prob*100)
+#' @rdname drt
+drt_AR1 <- function (image)             .command(image, "-Tar1")
