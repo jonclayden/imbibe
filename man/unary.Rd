@@ -14,6 +14,7 @@
 \alias{reciprocal}
 \alias{absolute}
 \alias{binarise}
+\alias{binarize}
 \title{Basic unary operations}
 \usage{
 exponent(image)
@@ -41,6 +42,8 @@ reciprocal(image)
 absolute(image)
 
 binarise(image, invert = FALSE)
+
+binarize(image, invert = FALSE)
 }
 \arguments{
 \item{image}{An image object or pipeline.}

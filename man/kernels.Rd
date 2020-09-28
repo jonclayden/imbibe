@@ -2,6 +2,7 @@
 % Please edit documentation in R/operations.R
 \name{kernel_3d}
 \alias{kernel_3d}
+\alias{kernels}
 \alias{kernel_2d}
 \alias{kernel_box}
 \alias{kernel_gauss}
@@ -36,10 +37,10 @@ millimetres and can take any value.}
 \item{sigma}{Numeric value giving the standard deviation of a Gaussian
 kernel, in millimetres.}
 
-\item{file}{Name of a NIfTI file containing the kernel.}
-
-\item{sphere}{Numeric value giving the radius of a sphere kernel, in
+\item{radius}{Numeric value giving the radius of a sphere kernel, in
 millimetres.}
+
+\item{file}{Name of a NIfTI file containing the kernel.}
 }
 \value{
 An updated pipeline.

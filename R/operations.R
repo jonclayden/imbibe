@@ -1,12 +1,19 @@
-niimath <- function (image) {
-    if (inherits(image, "niimath"))
+#' Create an operation pipeline
+#' 
+#' @param image An image object or existing pipeline.
+#' @param x An \code{"imbibe"} object.
+#' @param ... Additional arguments to \code{\link{run}}.
+#' 
+#' @export
+imbibe <- function (image) {
+    if (inherits(image, "imbibe"))
         image
     else
-        structure("#1", images=list(asNifti(image,internal=TRUE)), class="niimath")
+        structure("#1", images=list(asNifti(image,internal=TRUE)), class="imbibe")
 }
 
 .command <- function (init, flag, ...) {
-    init <- niimath(init)
+    init <- imbibe(init)
     elements <- as.character(c(init, flag))
     images <- attr(init, "images")
     args <- list(...)
@@ -18,13 +25,38 @@ niimath <- function (image) {
             images <- c(images, list(asNifti(args[[i]],internal=TRUE)))
         }
     }
-    structure(elements, images=images, class="niimath")
+    structure(elements, images=images, class="imbibe")
 }
 
+
+#' Run a pipeline and return an image result
+#' 
+#' @param pipe An operation pipeline.
+#' @param precision The internal precision used for calculations. \code{"float"} and
+#'   \code{"single"} are equivalent.
+#' @return An image
+#' 
 #' @export
 run <- function (pipe, precision = c("double","float","single")) {
     precision <- match.arg(precision)
     .Call(C_run, pipe, precision)
+}
+
+
+#' @rdname imbibe
+#' @export
+asNifti.imbibe <- function (x, ...) {
+    run(x, ...)
+}
+
+
+#' @rdname imbibe
+#' @export
+print.imbibe <- function (x, ...) {
+    if (getOption("imbibe.autorun", TRUE))
+        run(x, ...)
+    else
+        structure(paste(x, collapse=" "), images=attr(x,"images"))
 }
 
 
@@ -123,7 +155,9 @@ reciprocal <- function (image)  .command(image, "-recip")
 #' @rdname unary
 absolute <- function (image)    .command(image, "-abs")
 #' @rdname unary
-binarise <- binarize <- function (image, invert = FALSE) .command(image, ifelse(invert,"-binv","-bin"))
+binarise <- function (image, invert = FALSE) .command(image, ifelse(invert,"-binv","-bin"))
+#' @rdname unary
+binarize <- binarise
 
 
 #' Mathematical morphology kernels
@@ -138,12 +172,13 @@ binarise <- binarize <- function (image, invert = FALSE) .command(image, ifelse(
 #'   millimetres and can take any value.
 #' @param sigma Numeric value giving the standard deviation of a Gaussian
 #'   kernel, in millimetres.
-#' @param sphere Numeric value giving the radius of a sphere kernel, in
+#' @param radius Numeric value giving the radius of a sphere kernel, in
 #'   millimetres.
 #' @param file Name of a NIfTI file containing the kernel.
 #' @return An updated pipeline.
 #' 
 #' @rdname kernels
+#' @aliases kernels
 #' @export kernel_3d kernel_2d kernel_box kernel_gauss kernel_sphere kernel_file
 kernel_3d <- function (image)   .command(image, c("-kernel","3D"))
 #' @rdname kernels
@@ -170,6 +205,28 @@ kernel_file <- function (image, file)       .command(image, c("-kernel","file",f
 
 #' Mathematical morphology and filtering operations
 #' 
+#' @param image An image object or pipeline.
+#' @param kernel A suitable kernel function (see \code{\link{kernels}}). If
+#'   \code{NULL}, the most recently set kernel in the pipeline is used, if any,
+#'   otherwise the default kernel (\code{kernel_3d}).
+#' @param ... Additional arguments to the kernel function, if any.
+#' @param max Logical value: if \code{TRUE}, maximum filtering is used for
+#'   dilation; otherwise mean filtering is used. Mean filtering is always used
+#'   by \code{dilateall}.
+#' @param nonzero Logical value: if \code{TRUE}, the default, dilation is only
+#'   applied to nonzero pixels/voxels. Otherwise it is applied everywhere (and
+#'   maximum filtering is always used).
+#' @param min Logical value: if \code{TRUE}, minimum filtering is used for
+#'   erosion; otherwise nonzero voxels overlapping with the kernel are simply
+#'   zeroed.
+#' @param norm Logical value indicating whether the mean filter will be
+#'   normalised or not.
+#' @param sigma Numeric value giving the standard deviation of the Gaussian
+#'   smoothing kernel.
+#' @param offset Logical value indicating whether subsampled pixels should be
+#'   offset from the original locations or not.
+#' @return An updated pipeline.
+#' 
 #' @rdname morphology
 #' @export dilate dilateall erode filter_median filter_mean smooth_gauss
 dilate <- function (image, kernel = NULL, ..., max = FALSE, nonzero = TRUE) {
@@ -180,8 +237,10 @@ dilate <- function (image, kernel = NULL, ..., max = FALSE, nonzero = TRUE) {
         flag <- "-dilD"
     else if (max && !nonzero)
         flag <- "-dilF"
-    else
-        stop("The specified set of options to dilate() is invalid")
+    else {
+        flag <- "-dilF"
+        warning("Maximum filtering is always used when including zero voxels")
+    }
     
     if (is.null(kernel))
         .command(image, flag)
@@ -225,10 +284,18 @@ filter_mean <- function (image, kernel = NULL, ..., norm = TRUE) {
 
 #' @rdname morphology
 smooth_gauss <- function (image, sigma)         .command(image, "-s", as.numeric(sigma))
+
+#' @rdname morphology
 subsample <- function (image, offset = FALSE)   .command(image, ifelse(offset,"-subsamp2offc","-subsamp2"))
 
 
 #' Dimensionality reduction in the temporal domain
+#' 
+#' @param image An image object or pipeline.
+#' @param prob For \code{drt_quantile}, the quantile probability to extract
+#'   (analogously to \code{\link{quantile}}).
+#' @return An updated pipeline.
+#' 
 #' @rdname drt
 #' @export drt_mean drt_sd drt_max drt_whichmax drt_min drt_median drt_quantile drt_AR1
 drt_mean <- function (image)            .command(image, "-Tmean")

@@ -7,6 +7,7 @@
 \alias{filter_median}
 \alias{filter_mean}
 \alias{smooth_gauss}
+\alias{subsample}
 \title{Mathematical morphology and filtering operations}
 \usage{
 dilate(image, kernel = NULL, ..., max = FALSE, nonzero = TRUE)
@@ -20,6 +21,41 @@ filter_median(image, kernel = NULL, ...)
 filter_mean(image, kernel = NULL, ..., norm = TRUE)
 
 smooth_gauss(image, sigma)
+
+subsample(image, offset = FALSE)
+}
+\arguments{
+\item{image}{An image object or pipeline.}
+
+\item{kernel}{A suitable kernel function (see \code{\link{kernels}}). If
+\code{NULL}, the most recently set kernel in the pipeline is used, if any,
+otherwise the default kernel (\code{kernel_3d}).}
+
+\item{...}{Additional arguments to the kernel function, if any.}
+
+\item{max}{Logical value: if \code{TRUE}, maximum filtering is used for
+dilation; otherwise mean filtering is used. Mean filtering is always used
+by \code{dilateall}.}
+
+\item{nonzero}{Logical value: if \code{TRUE}, the default, dilation is only
+applied to nonzero pixels/voxels. Otherwise it is applied everywhere (and
+maximum filtering is always used).}
+
+\item{min}{Logical value: if \code{TRUE}, minimum filtering is used for
+erosion; otherwise nonzero voxels overlapping with the kernel are simply
+zeroed.}
+
+\item{norm}{Logical value indicating whether the mean filter will be
+normalised or not.}
+
+\item{sigma}{Numeric value giving the standard deviation of the Gaussian
+smoothing kernel.}
+
+\item{offset}{Logical value indicating whether subsampled pixels should be
+offset from the original locations or not.}
+}
+\value{
+An updated pipeline.
 }
 \description{
 Mathematical morphology and filtering operations

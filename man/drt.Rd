@@ -27,6 +27,15 @@ drt_quantile(image, prob)
 
 drt_AR1(image)
 }
+\arguments{
+\item{image}{An image object or pipeline.}
+
+\item{prob}{For \code{drt_quantile}, the quantile probability to extract
+(analogously to \code{\link{quantile}}).}
+}
+\value{
+An updated pipeline.
+}
 \description{
 Dimensionality reduction in the temporal domain
 }
