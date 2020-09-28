@@ -39,3 +39,13 @@ An updated pipeline.
 \description{
 Dimensionality reduction in the temporal domain
 }
+\examples{
+image = system.file("extdata/example.nii.gz", package = "RNifti")
+image \%>\% drt_mean \%>\% run()
+drt_sd(image)
+drt_max(image)
+drt_whichmax(image)
+drt_min(image)
+drt_median(image)
+drt_AR1(image)
+}

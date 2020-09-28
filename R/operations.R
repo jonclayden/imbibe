@@ -1,9 +1,9 @@
 #' Basic binary operations
-#' 
+#'
 #' @param image An image object or pipeline.
 #' @param arg Numeric or image argument.
 #' @return An updated pipeline.
-#' 
+#'
 #' @rdname binary
 #' @export add subtract multiply divide remainder mask maximum minimum
 add <- function (image, arg)        .command(image, "-add", arg)
@@ -24,7 +24,7 @@ minimum <- function (image, arg)    .command(image, "-min", arg)
 
 
 #' Image thresholding
-#' 
+#'
 #' @param image An image object or pipeline.
 #' @param value Numeric threshold value.
 #' @param reference String indicating what the \code{value} should be
@@ -38,7 +38,7 @@ minimum <- function (image, arg)    .command(image, "-min", arg)
 #'   \code{threshold_below} and \code{threshold_above} function variants set
 #'   argument implicitly.
 #' @return An updated pipeline.
-#' 
+#'
 #' @export threshold threshold_below threshold_above
 threshold <- function (image, value, reference = c("none","image","nonzero"), above = FALSE) {
     reference <- match.arg(reference)
@@ -60,14 +60,14 @@ threshold_above <- function (image, value, reference = c("none","image","nonzero
 
 
 #' Basic unary operations
-#' 
+#'
 #' @param image An image object or pipeline.
 #' @param invert Logical value: if \code{TRUE}, binarising will also perform
 #'   logical inversion so that only zeroes in the original image will be
 #'   nonzero; if \code{FALSE}, the default, the usual sense is used, in which
 #'   zeroes remain as they are, and everything else is converted to 1.
 #' @return An updated pipeline.
-#' 
+#'
 #' @rdname unary
 #' @export exponent logarithm sine cosine tangent arcsine arccosine arctangent square squareroot reciprocal absolute binarise binarize
 exponent <- function (image)    .command(image, "-exp")
@@ -100,7 +100,7 @@ binarize <- binarise
 
 
 #' Mathematical morphology kernels
-#' 
+#'
 #' @param image An image object or pipeline.
 #' @param width The width of the kernel in appropriate units. If \code{voxels}
 #'   is \code{FALSE} a value can be specified for each of the three dimensions;
@@ -115,7 +115,7 @@ binarize <- binarise
 #'   millimetres.
 #' @param file Name of a NIfTI file containing the kernel.
 #' @return An updated pipeline.
-#' 
+#'
 #' @rdname kernels
 #' @aliases kernels
 #' @export kernel_3d kernel_2d kernel_box kernel_gauss kernel_sphere kernel_file
@@ -143,7 +143,7 @@ kernel_file <- function (image, file)       .command(image, c("-kernel","file",f
 
 
 #' Mathematical morphology and filtering operations
-#' 
+#'
 #' @param image An image object or pipeline.
 #' @param kernel A suitable kernel function (see \code{\link{kernels}}). If
 #'   \code{NULL}, the most recently set kernel in the pipeline is used, if any,
@@ -165,7 +165,7 @@ kernel_file <- function (image, file)       .command(image, c("-kernel","file",f
 #' @param offset Logical value indicating whether subsampled pixels should be
 #'   offset from the original locations or not.
 #' @return An updated pipeline.
-#' 
+#'
 #' @rdname morphology
 #' @export dilate dilateall erode filter_median filter_mean smooth_gauss
 dilate <- function (image, kernel = NULL, ..., max = FALSE, nonzero = TRUE) {
@@ -180,7 +180,7 @@ dilate <- function (image, kernel = NULL, ..., max = FALSE, nonzero = TRUE) {
         flag <- "-dilF"
         warning("Maximum filtering is always used when including zero voxels")
     }
-    
+
     if (is.null(kernel))
         .command(image, flag)
     else
@@ -229,13 +229,22 @@ subsample <- function (image, offset = FALSE)   .command(image, ifelse(offset,"-
 
 
 #' Dimensionality reduction in the temporal domain
-#' 
+#'
 #' @param image An image object or pipeline.
 #' @param prob For \code{drt_quantile}, the quantile probability to extract
 #'   (analogously to \code{\link{quantile}}).
 #' @return An updated pipeline.
-#' 
+#'
 #' @rdname drt
+#' @examples
+#' image = system.file("extdata/example.nii.gz", package = "RNifti")
+#' image %>% drt_mean %>% run()
+#' drt_sd(image)
+#' drt_max(image)
+#' drt_whichmax(image)
+#' drt_min(image)
+#' drt_median(image)
+#' drt_AR1(image)
 #' @export drt_mean drt_sd drt_max drt_whichmax drt_min drt_median drt_quantile drt_AR1
 drt_mean <- function (image)            .command(image, "-Tmean")
 #' @rdname drt
