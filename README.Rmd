@@ -1,4 +1,6 @@
-
+```{r, echo=FALSE}
+knitr::opts_chunk$set(collapse=TRUE, fig.path="tools/figures/", dpi=150)
+```
 
 [![Build Status](https://travis-ci.org/jonclayden/imbibe.svg?branch=master)](https://travis-ci.org/jonclayden/imbibe)
 
@@ -10,8 +12,7 @@ The `imbibe` [R package](https://www.r-project.org) offers fast, chainable image
 
 The package is not yet available from CRAN, and is currently somewhat experimental, but it can be easily installed using the `remotes` package.
 
-
-```r
+```{r, eval=FALSE}
 ## install.packages("remotes")
 remotes::install_github("jonclayden/imbibe")
 ```
