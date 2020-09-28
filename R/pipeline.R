@@ -18,7 +18,7 @@ imbibe <- function (image) {
     images <- attr(init, "images")
     args <- list(...)
     for (i in seq_along(args)) {
-        if (is.numeric(args[[i]]))
+        if (is.numeric(args[[i]]) && is.null(dim(args[[i]])))
             elements <- c(elements, paste(as.character(args[[i]]), collapse=" "))
         else {
             elements <- c(elements, paste0("#",length(images)+1))
