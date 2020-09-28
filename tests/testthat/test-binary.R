@@ -1,4 +1,4 @@
-testthat::context("Trying out 4D DRT functions")
+testthat::context("Trying out Binary and one-type operations")
 fname = system.file("extdata/example.nii.gz", package = "RNifti")
 image = RNifti::readNifti(fname)
 arr = array(image, dim = dim(image))
