@@ -1,6 +1,3 @@
 *.DS_Store
-/build/
-/bin/
-/src/niimath
-niimath
 .Rproj.user
+/config.*
