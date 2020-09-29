@@ -2,16 +2,18 @@ Package: imbibe
 Version: 0.1.0
 Date: 2020-09-25
 Title: A Pipe-Friendly Image Calculator
-Authors@R: c(person("Jon", "Clayden", email="code@clayden.org", role=c("aut","cre")),
-             person("Chris", "Rorden", role="aut"))
+Authors@R: c(person("Jon", "Clayden", email="code@clayden.org", role=c("aut","cre"), comment=c(ORCID="0000-0002-6608-0619")),
+             person("Chris", "Rorden", role="aut"),
+             person("John", "Muschelli", role="ctb", comment=c(ORCID="0000-0001-6469-1750")))
 Maintainer: Jon Clayden <code@clayden.org>
 Imports: Rcpp, RNifti, magrittr
 LinkingTo: Rcpp, RNifti
-Description: An R wrapper around Chris Rorden's reimplementation of 'fslmaths'.
+Suggests: testthat, covr
+Description: Provides a set of fast, chainable image-processing operations
+             which are applicable to images of two, three or four dimensions,
+             particularly medical images.
 License: BSD_2_clause + file LICENCE
-URL: https://github.com/jonclayden/niimath
-BugReports: https://github.com/jonclayden/niimath/issues
+URL: https://github.com/jonclayden/imbibe
+BugReports: https://github.com/jonclayden/imbibe/issues
 Encoding: UTF-8
 RoxygenNote: 7.1.1
-Suggests: 
-    testthat
