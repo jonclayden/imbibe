@@ -1,8 +1,14 @@
+---
+output: github_document
+---
+
 ```{r, echo=FALSE}
 knitr::opts_chunk$set(collapse=TRUE, fig.path="tools/figures/", dpi=150)
 ```
 
+<!-- badges: start -->
 [![Build Status](https://travis-ci.org/jonclayden/imbibe.svg?branch=master)](https://travis-ci.org/jonclayden/imbibe)
+<!-- badges: end -->
 
 # imbibe: A pipe-friendly image calculator <img src='tools/figures/logo-small.png' align="right" />
 
