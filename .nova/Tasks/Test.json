@@ -1,0 +1,13 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "#!\/usr\/bin\/env Rscript\n\nlibrary(imbibe)\nlibrary(tinytest)\n\ntest_all(Sys.getenv(\"PROJECT_PATH\"))\n"
+    }
+  },
+  "environment" : {
+    "PROJECT_PATH" : "${WorkspaceFolder}"
+  },
+  "identifier" : "A2FDCC06-B717-479B-8B31-A43DF1A77AFB",
+  "openLogOnRun" : "start"
+}

@@ -2,4 +2,5 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^\.github$
+^\.nova$
 ^README\.Rmd$
