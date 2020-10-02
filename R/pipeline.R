@@ -60,5 +60,5 @@ as.array.imbibe <- function (x, ...) {
 #' @rdname imbibe
 #' @export
 print.imbibe <- function (x, ...) {
-    structure(paste(x, collapse=" "), images=attr(x,"images"))
+    print(structure(paste(x, collapse=" "), images=attr(x,"images")))
 }
