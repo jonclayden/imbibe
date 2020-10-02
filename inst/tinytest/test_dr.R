@@ -2,13 +2,12 @@ using("imbibe")
 
 image <- RNifti::readNifti(system.file("extdata", "example_4d.nii.gz", package="RNifti"))
 
-
-functions <- list(drt_mean = mean,
-                  drt_sd = sd,
-                  drt_max = max,
-                  drt_whichmax = which.max,
-                  drt_min = min,
-                  drt_median = median)
+functions <- list(dim_mean = mean,
+                  dim_sd = sd,
+                  dim_max = max,
+                  dim_whichmax = which.max,
+                  dim_min = min,
+                  dim_median = median)
 
 for (i in seq_along(functions)) {
     ifun <- get(names(functions)[i], "package:imbibe")

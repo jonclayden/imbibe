@@ -228,36 +228,36 @@ smooth_gauss <- function (image, sigma)         .command(image, "-s", as.numeric
 subsample <- function (image, offset = FALSE)   .command(image, ifelse(offset,"-subsamp2offc","-subsamp2"))
 
 
-#' Dimensionality reduction in the temporal domain
+.reduce <- function (image, dim, op, ...) {
+    if (!is.numeric(dim) || dim < 1 || dim > 4)
+        stop("The specified dimension is out of bounds")
+    dimname <- c("X","Y","Z","T")[dim]
+    .command(image, paste0("-", dimname, op), ...)
+}
+
+#' Dimensionality reduction operations
 #'
 #' @param image An image object or pipeline.
+#' @param dim Integer value between 1 and 4, giving the dimension to apply the
+#'   reduction along.
 #' @param prob For \code{drt_quantile}, the quantile probability to extract
 #'   (analogously to \code{\link{quantile}}).
 #' @return An updated pipeline.
 #'
-#' @rdname drt
-#' @examples
-#' image = system.file("extdata/example.nii.gz", package = "RNifti")
-#' image %>% drt_mean %>% run()
-#' drt_sd(image)
-#' drt_max(image)
-#' drt_whichmax(image)
-#' drt_min(image)
-#' drt_median(image)
-#' drt_AR1(image)
-#' @export drt_mean drt_sd drt_max drt_whichmax drt_min drt_median drt_quantile drt_AR1
-drt_mean <- function (image)            .command(image, "-Tmean")
-#' @rdname drt
-drt_sd <- function (image)              .command(image, "-Tstd")
-#' @rdname drt
-drt_max <- function (image)             .command(image, "-Tmax")
-#' @rdname drt
-drt_whichmax <- function (image)        .command(.command(image, "-Tmaxn"), "-add", 1)
-#' @rdname drt
-drt_min <- function (image)             .command(image, "-Tmin")
-#' @rdname drt
-drt_median <- function (image)          .command(image, "-Tmedian")
-#' @rdname drt
-drt_quantile <- function (image, prob)  .command(image, "-Tperc", prob*100)
-#' @rdname drt
-drt_AR1 <- function (image)             .command(image, "-Tar1")
+#' @rdname reduce
+#' @export dim_mean dim_sd dim_max dim_whichmax dim_min dim_median dim_quantile dim_AR1
+dim_mean <- function (image, dim = 4L)              .reduce(image, dim, "mean")
+#' @rdname reduce
+dim_sd <- function (image, dim = 4L)                .reduce(image, dim, "std")
+#' @rdname reduce
+dim_max <- function (image, dim = 4L)               .reduce(image, dim, "max")
+#' @rdname reduce
+dim_whichmax <- function (image, dim = 4L)          .command(.reduce(image,dim,"maxn"), "-add", 1)
+#' @rdname reduce
+dim_min <- function (image, dim = 4L)               .reduce(image, dim, "min")
+#' @rdname reduce
+dim_median <- function (image, dim = 4L)            .reduce(image, dim, "median")
+#' @rdname reduce
+dim_quantile <- function (image, dim = 4L, prob)    .reduce(image, dim, "perc", prob*100)
+#' @rdname reduce
+dim_AR1 <- function (image, dim = 4L)               .reduce(image, dim, "ar1")
