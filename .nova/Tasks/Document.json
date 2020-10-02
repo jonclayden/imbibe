@@ -1,0 +1,13 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "#!\/usr\/bin\/env Rscript\n\ndevtools::document(Sys.getenv(\"PROJECT_PATH\"))\n"
+    }
+  },
+  "environment" : {
+    "PROJECT_PATH" : "${WorkspaceFolder}"
+  },
+  "identifier" : "9574D106-AFC5-4CA7-A65B-76AFD172F269",
+  "openLogOnRun" : "start"
+}
