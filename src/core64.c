@@ -3860,7 +3860,9 @@ static int nifti_thrp(nifti_image * nim, double v, enum eOp op) {
 int main32(int argc, char * argv[]) {
 #else
 int main64(int argc, char * argv[]) {
+#ifndef USING_R
 	niimath_print("beta: Using 64-bit calc\n");
+#endif
 #endif
 	char * fin=NULL, * fout=NULL;
 	//fslmaths in.nii out.nii changes datatype to flt, here we retain (similar to earlier versions of fslmaths)
@@ -3886,6 +3888,7 @@ int main64(int argc, char * argv[]) {
 	// no calculation, simple pass through copy, e.g. "niimaths in.nii out.nii.gz"
 	// note fslmaths would save as flt type... but lossless conversion in native format is faster
 	// note here we use nifti_image_read not nifti_image_read2 to preserve cal_min, cal_max
+#ifndef USING_R
 	if (ac+2 == argc) {
 		fin = argv[ac]; /* no string copy, just pointer assignment */
 		ac ++;
@@ -3897,6 +3900,7 @@ int main64(int argc, char * argv[]) {
 		nifti_image_free( nim );
 		return 0;
 	} //end pass through
+#endif
 	// next argument is input file
 	fin = argv[ac]; /* no string copy, just pointer assignment */
 	ac ++;
@@ -3935,9 +3939,11 @@ int main64(int argc, char * argv[]) {
 	//convert data to calculation type (-dt)
 	if (nifti_image_change_datatype(nim, dtCalc, &ihdr) != 0) return 1; 
 	//check output filename, e.g does file exist
+#ifndef USING_R
 	fout = argv[argc-1]; /* no string copy, just pointer assignment */
 	if( nifti_set_filenames(nim, fout, 0, 1) ) return 1;
 	argc = argc - 1;
+#endif
 	#if defined(_OPENMP) 
 		const int maxNumThreads = omp_get_max_threads();
 		const char *key = "AFNI_COMPRESSOR";
