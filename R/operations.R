@@ -252,7 +252,7 @@ drt_sd <- function (image)              .command(image, "-Tstd")
 #' @rdname drt
 drt_max <- function (image)             .command(image, "-Tmax")
 #' @rdname drt
-drt_whichmax <- function (image)        .command(image, "-Tmaxn")
+drt_whichmax <- function (image)        .command(.command(image, "-Tmaxn"), "-add", 1)
 #' @rdname drt
 drt_min <- function (image)             .command(image, "-Tmin")
 #' @rdname drt
