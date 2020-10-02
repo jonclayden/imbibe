@@ -9,5 +9,5 @@
     "PROJECT_PATH" : "${WorkspaceFolder}"
   },
   "identifier" : "9574D106-AFC5-4CA7-A65B-76AFD172F269",
-  "openLogOnRun" : "start"
+  "openLogOnRun" : "fail"
 }
