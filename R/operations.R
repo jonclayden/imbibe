@@ -43,9 +43,9 @@ minimum <- function (image, arg)    .command(image, "-min", arg)
 threshold <- function (image, value, reference = c("none","image","nonzero"), above = FALSE) {
     reference <- match.arg(reference)
     if (above)
-        .command(image, switch(reference,none="-uthr",image="-uthrp",nonzero="-uthrP"))
+        .command(image, switch(reference,none="-uthr",image="-uthrp",nonzero="-uthrP"), value)
     else
-        .command(image, switch(reference,none="-thr",image="-thrp",nonzero="-thrP"))
+        .command(image, switch(reference,none="-thr",image="-thrp",nonzero="-thrP"), value)
 }
 
 #' @rdname threshold
