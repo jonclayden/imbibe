@@ -20,6 +20,15 @@
 #define M_PI 3.14159265358979323846264338327
 #endif
 
+#ifdef USING_R
+
+int nifti_save(nifti_image * nim, const char *postfix) {
+    setOutputImage(nim);
+    return 0;
+}
+
+#else
+
 int nifti_save(nifti_image * nim, const char *postfix) {
 	char   extnii[5] = ".nii";   /* modifiable, for possible uppercase */
 	char   exthdr[5] = ".hdr";
@@ -83,9 +92,6 @@ int nifti_save(nifti_image * nim, const char *postfix) {
    	//append extensions...
 	nim->fname = hname;
 	nim->iname = iname;
-#ifdef USING_R
-    setOutputImage(nim);
-#else
 	nifti_image_write( nim );
 	free(hname);
 	if ( nim->iname != NULL )
@@ -94,9 +100,10 @@ int nifti_save(nifti_image * nim, const char *postfix) {
 	nim->fname = fname_in;
 	nim->iname = iname_in;
 	nim->nifti_type = nifti_type_in;
-#endif
 	return 0;
 }
+
+#endif
 
 mat44 xform(nifti_image * nim) {
 	if ((nim->sform_code == NIFTI_XFORM_UNKNOWN) && (nim->qform_code == NIFTI_XFORM_UNKNOWN)) {
