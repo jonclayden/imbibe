@@ -11,6 +11,8 @@ expect_pipeline_result(minimum(image,10),   pmin(image,10))
 expect_pipeline_result(maximum(image,10),   pmax(image,10))
 expect_pipeline_result(remainder(image,10), image %% 10)
 
+# Exponent and reciprocal don't match, seemingly because overflow to +/- Inf
+# isn't consistent between niimath and R, so we skip them for now
 functions <- list(# exponent = exp,
                   logarithm = log,
                   sine = sin,

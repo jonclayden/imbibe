@@ -8,7 +8,7 @@ Authors@R: c(person("Jon", "Clayden", email="code@clayden.org", role=c("aut","cr
 Maintainer: Jon Clayden <code@clayden.org>
 Imports: Rcpp, RNifti, magrittr
 LinkingTo: Rcpp, RNifti
-Suggests: tinytest, covr
+Suggests: mmand, tinytest, covr
 Description: Provides a set of fast, chainable image-processing operations
              which are applicable to images of two, three or four dimensions,
              particularly medical images.
