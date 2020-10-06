@@ -4,13 +4,16 @@
 \alias{expect_pipeline_result}
 \title{Expectation for testing pipeline output}
 \usage{
-expect_pipeline_result(current, target, ...)
+expect_pipeline_result(current, target, precision = "double", ...)
 }
 \arguments{
 \item{current}{The pipeline to run, which should have class \code{"imbibe"}.}
 
 \item{target}{The target value to compare against, a numeric array of some
 kind, which will be converted to a \code{"niftiImage"} object.}
+
+\item{precision}{A string specifying the working precision. Passed to
+\code{\link{run}}.}
 
 \item{...}{Further arguments to \code{expect_equal}.}
 }

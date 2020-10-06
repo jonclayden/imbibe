@@ -1,5 +1,7 @@
 using("imbibe")
 
+options(imbibe.threads=2L)
+
 image <- RNifti::readNifti(system.file("extdata", "example.nii.gz", package="RNifti"))
 
 expect_pipeline_result(add(image,10),       image + 10)
@@ -18,8 +20,8 @@ functions <- list(# exponent = exp,
                   sine = sin,
                   cosine = cos,
                   tangent = tan,
-                  arcsine = asin,
-                  arccosine = acos,
+                  arcsine = function(x) suppressWarnings(asin(x)),
+                  arccosine = function(x) suppressWarnings(acos(x)),
                   arctangent = atan,
                   square = function(x) x^2,
                   squareroot = sqrt,
@@ -30,4 +32,5 @@ for (i in seq_along(functions)) {
     ifun <- get(names(functions)[i], "package:imbibe")
     rfun <- match.fun(functions[[i]])
     expect_pipeline_result(ifun(image), rfun(image), info=paste("Function is", names(functions)[i]), tolerance=1e-6)
+    expect_pipeline_result(ifun(image), rfun(image), info=paste("Function is", names(functions)[i]), precision="single", tolerance=1e-6)
 }

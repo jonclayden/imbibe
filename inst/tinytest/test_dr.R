@@ -1,5 +1,7 @@
 using("imbibe")
 
+options(imbibe.threads=2L)
+
 image <- RNifti::readNifti(system.file("extdata", "example.nii.gz", package="RNifti"))
 
 # Medians don't match because even dims are not resolved the same way
@@ -13,4 +15,5 @@ for (i in seq_along(functions)) {
     ifun <- get(names(functions)[i], "package:imbibe")
     rfun <- match.fun(functions[[i]])
     expect_pipeline_result(ifun(image,dim=1L), apply(image,2:3,rfun), info=paste("Function is", names(functions)[i]), tolerance=1e-6, check.attributes=FALSE)
+    expect_pipeline_result(ifun(image,dim=1L), apply(image,2:3,rfun), info=paste("Function is", names(functions)[i]), precision="single", tolerance=1e-6, check.attributes=FALSE)
 }

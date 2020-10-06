@@ -1,5 +1,7 @@
 using("imbibe")
 
+options(imbibe.threads=2L)
+
 slice <- RNifti::readNifti(system.file("extdata", "example.nii.gz", package="RNifti"))[,,30]
 
 expect_pipeline_result(slice %>% threshold_below(300), ifelse(slice < 300, 0, slice))
