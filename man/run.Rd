@@ -4,13 +4,22 @@
 \alias{run}
 \title{Run a pipeline and return an image result}
 \usage{
-run(pipe, precision = c("double", "float", "single"))
+run(
+  pipe,
+  precision = getOption("imbibe.precision", "double"),
+  threads = getOption("imbibe.threads", 0L)
+)
 }
 \arguments{
 \item{pipe}{An operation pipeline.}
 
-\item{precision}{The internal precision used for calculations. \code{"float"} and
-\code{"single"} are equivalent.}
+\item{precision}{The internal precision used for calculations. May be
+\code{"double"}, \code{"float"} or \code{"single"}; the latter two are
+equivalent.}
+
+\item{threads}{The number of threads to use for calculations. The default
+is zero, which corresponds to the maximum number allowed by OpenMP. Has no
+effect on builds without OpenMP support.}
 }
 \value{
 An image

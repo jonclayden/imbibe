@@ -2,7 +2,7 @@
 #include "core64.h"
 #include "RNifti_shim.h"
 
-RcppExport SEXP run (SEXP _args, SEXP _precision)
+RcppExport SEXP run (SEXP _args, SEXP _precision, SEXP _threads)
 {
 BEGIN_RCPP
     int status = 0;
@@ -50,8 +50,14 @@ BEGIN_RCPP
         }
     }
     
+    // Set the number of threads, if appropriate
+#ifdef _OPENMP
+    const int threads = Rcpp::as<int>(_threads);
+    omp_set_num_threads(threads == 0 ? omp_get_max_threads() : threads);
+#endif
+    
     // Add the precision argument and run the pipeline
-    std::string precision = Rcpp::as<std::string>(_precision);
+    const std::string precision = Rcpp::as<std::string>(_precision);
     if (precision == "single" || precision == "float")
     {
         strcpy(args[2], "float");
@@ -75,7 +81,7 @@ extern "C" {
 
 // R interface metadata
 static R_CallMethodDef callMethods[] = {
-    { "run",    (DL_FUNC) &run,     2 },
+    { "run",    (DL_FUNC) &run,     3 },
     { NULL, NULL, 0 }
 };
 
