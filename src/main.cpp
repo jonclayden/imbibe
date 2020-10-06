@@ -2,6 +2,10 @@
 #include "core64.h"
 #include "RNifti_shim.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 RcppExport SEXP run (SEXP _args, SEXP _precision, SEXP _threads)
 {
 BEGIN_RCPP
