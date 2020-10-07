@@ -575,7 +575,7 @@ int * make_kernel_sphere(nifti_image * nim, int * nkernel, double mm) {
 	if (mm == 0.0) return NULL;
 	int x = (2*floor(mm/nim->dx))+1;
 	int y = (2*floor(mm/nim->dy))+1;
-	int z = (2*floor(mm/nim->dz))+1;
+	int z = nim->dz == 0.0 ? 1 : (2*floor(mm/nim->dz))+1;
 	int xlo = (int)(-x / 2);
 	int ylo = (int)(-y / 2);
 	int zlo = (int)(-z / 2);
