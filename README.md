@@ -10,7 +10,7 @@ The `imbibe` [R package](https://www.r-project.org) offers fast, chainable image
 
 ## Installation
 
-The package is not yet available from CRAN, and is currently somewhat experimental, but it can be easily installed using the `remotes` package.
+This package is still at quite an early stage of development. The latest version can be easily installed using the `remotes` package.
 
 
 ```r
@@ -43,7 +43,6 @@ A simple example operation would be to smooth the image with a Gaussian smoothin
 
 ```r
 smoothed <- run(smooth_gauss(image, 4))
-## beta: Using 64-bit calc
 view(smoothed)
 ## Setting window to (0, 549.9)
 ```
@@ -57,7 +56,6 @@ However, the pipe syntax provides an alternative, which can be further simplifie
 
 ```r
 image %>% smooth_gauss(4) %>% view()
-## beta: Using 64-bit calc
 ## Setting window to (0, 549.9)
 ```
 
@@ -68,7 +66,6 @@ Notice now `smooth_gauss()` is now called with only one argument, and `view()` w
 
 ```r
 image %>% kernel_sphere(radius=3) %>% dilate() %>% subtract(image) %>% view()
-## beta: Using 64-bit calc
 ## Setting window to (0, 60)
 ```
 

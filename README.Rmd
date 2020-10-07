@@ -12,7 +12,7 @@ The `imbibe` [R package](https://www.r-project.org) offers fast, chainable image
 
 ## Installation
 
-The package is not yet available from CRAN, and is currently somewhat experimental, but it can be easily installed using the `remotes` package.
+This package is still at quite an early stage of development. The latest version can be easily installed using the `remotes` package.
 
 ```{r, eval=FALSE}
 ## install.packages("remotes")
