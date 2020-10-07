@@ -35,15 +35,12 @@ imbibe <- function (image) {
 #' @param precision The internal precision used for calculations. May be
 #'   \code{"double"}, \code{"float"} or \code{"single"}; the latter two are
 #'   equivalent.
-#' @param threads The number of threads to use for calculations. The default
-#'   is zero, which corresponds to the maximum number allowed by OpenMP. Has no
-#'   effect on builds without OpenMP support.
 #' @return An image
 #' 
 #' @export
-run <- function (pipe, precision = getOption("imbibe.precision","double"), threads = getOption("imbibe.threads",0L)) {
+run <- function (pipe, precision = getOption("imbibe.precision","double")) {
     precision <- match.arg(precision, c("double","float","single"))
-    .Call(C_run, pipe, precision, threads)
+    .Call(C_run, pipe, precision, 0L)
 }
 
 

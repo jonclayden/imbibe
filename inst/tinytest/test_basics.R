@@ -1,7 +1,5 @@
 using("imbibe")
 
-options(imbibe.threads=2L)
-
 image <- RNifti::readNifti(system.file("extdata", "example.nii.gz", package="RNifti"))
 
 expect_pipeline_result(add(image,10),       image + 10)

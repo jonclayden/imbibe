@@ -1,7 +1,5 @@
 using("imbibe")
 
-options(imbibe.threads=2L)
-
 image <- RNifti::readNifti(system.file("extdata", "example.nii.gz", package="RNifti"))
 
 # Medians don't match because even dims are not resolved the same way

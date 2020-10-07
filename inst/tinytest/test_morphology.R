@@ -1,7 +1,5 @@
 using("imbibe")
 
-options(imbibe.threads=2L)
-
 if (system.file(package="mmand") == "") {
     exit_file("Cannot check morphology operations without the \"mmand\" package")
 }
