@@ -12,7 +12,7 @@ Suggests: mmand, tinytest, covr
 Description: Provides a set of fast, chainable image-processing operations
              which are applicable to images of two, three or four dimensions,
              particularly medical images.
-License: BSD_2_clause + file LICENCE
+License: BSD_3_clause + file LICENCE
 URL: https://github.com/jonclayden/imbibe
 BugReports: https://github.com/jonclayden/imbibe/issues
 Encoding: UTF-8
