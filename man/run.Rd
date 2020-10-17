@@ -19,3 +19,8 @@ An image
 \description{
 Run a pipeline and return an image result
 }
+\examples{
+im <- RNifti::readNifti(system.file("extdata", "example.nii.gz", package="RNifti"))
+pipe <- im \%>\% threshold_below(500) \%>\% binarise()
+run(pipe)
+}

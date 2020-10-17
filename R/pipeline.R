@@ -37,6 +37,10 @@ imbibe <- function (image) {
 #'   equivalent.
 #' @return An image
 #' 
+#' @examples
+#' im <- RNifti::readNifti(system.file("extdata", "example.nii.gz", package="RNifti"))
+#' pipe <- im %>% threshold_below(500) %>% binarise()
+#' run(pipe)
 #' @export
 run <- function (pipe, precision = getOption("imbibe.precision","double")) {
     precision <- match.arg(precision, c("double","float","single"))
