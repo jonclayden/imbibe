@@ -70,9 +70,6 @@ SEXP run (SEXP _args, SEXP _precision, SEXP _threads)
     return result;
 }
 
-// C linkage for R
-extern "C" {
-
 // R interface metadata
 static R_CallMethodDef callMethods[] = {
     { "run",    (DL_FUNC) &run,     3 },
@@ -87,5 +84,3 @@ void R_init_imbibe (DllInfo *info)
    R_forceSymbols(info, TRUE);
    niftilib_register_all();
 }
-
-} // extern "C"
