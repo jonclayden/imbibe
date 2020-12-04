@@ -7,8 +7,8 @@ Authors@R: c(person("Jon", "Clayden", email="code@clayden.org", role=c("aut","cr
              person("John", "Muschelli", role="ctb", comment=c(ORCID="0000-0001-6469-1750")),
              person("Exstrom Laboratories LLC", role="cph"))
 Maintainer: Jon Clayden <code@clayden.org>
-Imports: Rcpp, RNifti, magrittr
-LinkingTo: Rcpp, RNifti
+Imports: RNifti (>= 1.3.0), magrittr
+LinkingTo: RNifti
 Suggests: mmand, tinytest, covr
 Description: Provides a set of fast, chainable image-processing operations
              which are applicable to images of two, three or four dimensions,
