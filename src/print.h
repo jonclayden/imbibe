@@ -2,27 +2,20 @@
 #define _PRINT_H_
 
 #ifdef USING_R
-
-#define R_NO_REMAP
-#define R_USE_C99_IN_CXX
-
-#include <R_ext/Print.h>
-#include <R_ext/Error.h>
-
-#define niimath_print(...) Rprintf(__VA_ARGS__)
-#define niimath_message(...) REprintf(__VA_ARGS__)
-
-int niimath_rand ();
-
+	#define R_NO_REMAP
+	#define R_USE_C99_IN_CXX
+	#include <R_ext/Print.h>
+	#include <R_ext/Error.h>
+	#define printfx(...) REprintf(__VA_ARGS__)
+	int niimath_rand ();
 #else
-
-#include <stdio.h>
-
-#define niimath_print(...) printf(__VA_ARGS__)
-#define niimath_message(...) fprintf(stderr, __VA_ARGS__)
-
-#define niimath_rand rand
-
+	#ifdef USING_WASM
+		//WASM is silent: use return value to detect an error
+		#define printfx(...)
+	#else
+		#include <stdio.h>
+		#define printfx(...) fprintf(stderr, __VA_ARGS__)
+	#endif
 #endif // USING_R
 
 #endif
