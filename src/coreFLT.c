@@ -42,7 +42,9 @@
 	#define SIMD
 	#define xmemcpy memcpy
 	#define staticx static
-	#include <nifti2_io.h>
+    #ifndef USING_R
+	    #include <nifti2_io.h>
+    #endif
 	#define bandpass
 	#define bwlabelx
 	#define tensor_decomp //tensor_decomp support is optional

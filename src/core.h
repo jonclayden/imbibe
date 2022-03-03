@@ -29,6 +29,8 @@ void xfree(void *p);
  #define _mm_free(ptr) xfree(ptr)
 #endif
 
+#endif
+
 //CORE32 and CORE64 handle Float32 and Float64 operations, CORE handles shared code 
 
 enum eOp { unknown,

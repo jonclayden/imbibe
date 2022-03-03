@@ -1,1 +1,2 @@
 PKG_CPPFLAGS = -DUSING_R -DHAVE_ZLIB
+OBJECTS = main.o RNifti_shim.o bw.o bwlabel.o core.o core32.o core64.o tensor.o

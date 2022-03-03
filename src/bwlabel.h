@@ -5,7 +5,9 @@
 extern "C" {
 #endif
 
+#ifndef USING_R
 #include <nifti2_io.h>
+#endif
 
 int bwlabel(nifti_image *nim, int conn);
 

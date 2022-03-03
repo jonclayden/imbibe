@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <math.h>
+#ifndef USING_R
 #include <nifti2_io.h>
+#endif
 #include "core.h"
 #include "print.h"
 #ifdef __aarch64__

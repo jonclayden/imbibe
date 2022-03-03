@@ -37,7 +37,9 @@ void WASM_EXPORT(wfree)(void* ptr) {
 	#include <nifti2_wasm.h>
 #else
 	#define xmemcpy memcpy
-	#include <nifti2_io.h>
+    #ifndef USING_R
+	    #include <nifti2_io.h>
+    #endif
 #endif
 
 #ifndef M_PI
@@ -250,6 +252,8 @@ int nifti_save(nifti_image *nim, const char *postfix) {
 
 #endif
 
+#ifndef USING_WASM
+
 mat44 xform(nifti_image *nim) {
 	if ((nim->sform_code == NIFTI_XFORM_UNKNOWN) && (nim->qform_code == NIFTI_XFORM_UNKNOWN)) {
 		mat44 m; //4x4 matrix includes translations
@@ -289,6 +293,7 @@ nifti_image *nifti_image_read2(const char *hname, int read_data) {
 	nifti_image *nim = nifti_image_read(hname, read_data);
 	if (nim == NULL)
 		exit(134);
+#endif
 	nim->cal_min = 0.0;
 	nim->cal_max = 0.0;
 	//nim->descrip = '';
